@@ -12,9 +12,10 @@
       <link rel="icon" href="favicon.ico" type="image/x-icon">
 
 
-      <style>
+           <style>
         html, body{
           background: #065894;
+
         }
         .leaderboard{
           padding: 24px;
@@ -22,9 +23,13 @@
           display: flex;
           flex-direction: row;
           overflow: auto;
-          align-items: center;
-          height: 100%;
+          align-items: baseline;
         }
+
+        .leaderboard::-webkit-scrollbar{
+          display: none;
+        }
+
         .leaderboard h1{
           width: 50cw
         }
@@ -34,7 +39,6 @@
           justify-content: center;
           align-items: center;
           font-size: 1.5em;
-          min-width: 200px;
           cursor: pointer;
         }
         .leader:hover{
@@ -176,6 +180,8 @@
           bitsCont.style.height = bits/Leader.maxBits*70+'vh'
           bitsCont.style.lineHeight = bits/Leader.maxBits*70+'vh'
           bitsCont.style.fontSize = bits/Leader.maxBits*35+'vh'
+          //this.dom.style.width = bits/Leader.maxBits*70+'vh'
+          //bitsCont.style.lineHeight = bits/Leader.maxBits*70+'vh'
           this.dom.append(bitsCont)
           this.dom.append(name)
 
@@ -209,7 +215,6 @@
 
         }
       }
-
       class Ticket{
         constructor(options){
           this.dom = document.createElement('div');
