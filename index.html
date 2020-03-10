@@ -260,11 +260,17 @@
 
       getBits().then(bits=>{
         Leader.maxBits = bits[0].bits
+        let allBits = []
         for(let leader of bits){
+          for(let i = 0 ; i<leader.bits; i++){
+            allBits.push(leader.name)
+          }
           document.querySelector('.leaderboard').append(new Leader(leader.name, leader.bits, leader.details).dom)
         }
+        document.querySelector("button").addEventListener('click', ()=>{
+          alert(shuffle(allBits))
 
-
+        })
       })
 
     </script>
