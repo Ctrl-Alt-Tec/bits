@@ -13,8 +13,10 @@
 
 
       <style>
-        .leaderboard{
+        html, body{
           background: #065894;
+        }
+        .leaderboard{
           padding: 24px;
           color: white;
           display: flex;
@@ -117,7 +119,10 @@
 
     <div class="leaderboard">
     </div>
-    <span>
+    <span style="display: flex; padding: 16px; flex-direction: column; align-items: center; color: white;">
+
+      <button>Sorteo</button>
+
       Made with ❤️ by <a href="http://ctrl-alt-tec.hackclub.com">Ctrl Alt Tec</a>
     </span>
 
@@ -141,7 +146,14 @@
       }
 
  
-
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        //return array;
+        return array[Math.floor(Math.random() * array.length)]
+      }
 
 
 
