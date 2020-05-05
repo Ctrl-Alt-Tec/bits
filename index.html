@@ -4,6 +4,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>Quanta - Tickets</title>
+      <script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
       <script src="https://ctrl-alt-tec.github.io/altUI/altUI.js?v=3"></script>
       <link href="https://ctrl-alt-tec.github.io/altUI/altUI.css" rel="stylesheet">
       <link href='https://fonts.googleapis.com/css?family=Source Sans Pro' rel='stylesheet'>
@@ -66,7 +67,8 @@
           background: #ccb779;
           background-image: radial-gradient(30px circle, white 99%, transparent);
           background-position: 200px 105px;
-          padding: 32px
+          padding: 32px;
+          text-align: center;
         }
 
         .ticket_border{
@@ -116,6 +118,21 @@
           width: 100%;
         }
 
+        [name="winner"]{
+          padding: 16px;
+          margin: 16px;
+          background: black;
+          color: white;
+          font-size: 1.5em;
+        }
+
+        [name="medal"]{
+          box-shadow: inset 3px 3px 3px rgba(255,255,255,.7), inset -2px -2px 3px;
+          height: 400px; width: 400px;
+          border-radius: 200px;
+          background: gold;
+        }
+
       </style>
   </head>
 
@@ -132,8 +149,14 @@
 
 
     <script>
+      // Set up altUI
+      let UIAppBar = new UI.AppBar('LOGO-INLINE.png', '')
+      UIAppBar.setTitle("Tickets")
+      document.body.prepend(UIAppBar.dom)
+      let UIModal = new UI.Modal()
+      document.body.prepend(UIModal.dom)
 
-      //var csv is the CSV file with headers
+      // CONVERT CSV TO JSON
       function csvJSON(csv, header){
         var lines=csv.split("\n");
         var result = [];
@@ -149,160 +172,158 @@
         return result.slice(header)
       }
 
- /*
-      function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
+      // Participant clas
+      class Participant{
+        static maxBits;
+        constructor(options){
+          this.name = options.name;
+          this.bits = options.bits;
+          this.details = options.details
+          this.issuer = altBits.issuer;
+          this.unit = altBits.unit
         }
-        //return array;
-        return array[Math.floor(Math.random() * array.length)]
-      }
-*/
-
-
-      let UIAppBar = new UI.AppBar('LOGO-INLINE.png', '')
-      UIAppBar.setTitle("Tickets")
-      document.body.prepend(UIAppBar.dom)
-
-      let UIModal = new UI.Modal()
-      document.body.prepend(UIModal.dom)
-
-
-      class Leader{
-        constructor(name, bits, details){
+        // Render ball
+        renderBall(){
           this.dom = document.createElement('div');
           this.dom.classList.add('leader');
           let bitsCont = document.createElement('div');
           bitsCont.classList.add('bits_cont')
-          bitsCont.innerText = bits;
-          bitsCont.style.width = bits/Leader.maxBits*70+'vh'
-          bitsCont.style.height = bits/Leader.maxBits*70+'vh'
-          bitsCont.style.lineHeight = bits/Leader.maxBits*70+'vh'
-          bitsCont.style.fontSize = bits/Leader.maxBits*35+'vh'
-          //this.dom.style.width = bits/Leader.maxBits*70+'vh'
-          //bitsCont.style.lineHeight = bits/Leader.maxBits*70+'vh'
-          this.dom.append(bitsCont)
-          this.dom.append(name)
-
-          this.dom.addEventListener('click', ()=>{
-            UIModal.show(function(){
-              let container = document.createElement('div')
-              container.style.padding = "8px";
-              container.style.display = "flex";
-              container.style.flexDirection = "column";
-              container.style.alignItems = "center"; 
-              let title = document.createElement('h1')
-              title.innerText = name;
-              container.append(title)
-              container.append(new Ticket({
-                bits: bits,
-                name: name, 
-                issuer: 'Quanta',
-                unit: 'Tickets'
-              }).dom)
-
-              //container.append(JSON.stringify(details))
-              for (const key in details) {
-                if(details[key] > 0){
-                  container.append( new UI.ListViewItemKeyValue(key, details[key]).dom )
-                }
-              }
-
-              return container;
-            }(), "Detalles")
-          })
-
+          bitsCont.innerText = this.bits;
+          bitsCont.style.width = this.bits/Participant.maxBits*70+'vh'
+          bitsCont.style.height = this.bits/Participant.maxBits*70+'vh'
+          bitsCont.style.lineHeight = this.bits/Participant.maxBits*70+'vh'
+          bitsCont.style.fontSize = this.bits/Participant.maxBits*35+'vh'
+          this.dom.append(bitsCont, this.name)
+          this.dom.addEventListener('click', this.renderDetails.bind(this)) 
+          return this.dom
         }
-      }
-      class Ticket{
-        constructor(options){
-          this.dom = document.createElement('div');
-          this.dom.classList.add('ticket')
+        // Render modal window containing details
+        renderDetails(){
+          let container = document.createElement('div')
+          container.style.padding = "8px";
+          container.style.display = "flex";
+          container.style.flexDirection = "column";
+          container.style.alignItems = "center"; 
+          let title = document.createElement('h1')
+          title.innerText = this.name;
+          container.append(title)
+          container.append(this.renderTicket())
+          for (const key in this.details) {
+            if(this.details[key] > 0){
+              container.append( new UI.ListViewItemKeyValue(key, this.details[key]).dom )
+            }
+          }
+          UIModal.show(container, 'Detalles')
+        }
+        // Render ticket
+        renderTicket(){
+          let ticket = document.createElement('div');
+          ticket.classList.add('ticket')
           let ticket_border = document.createElement('div');
           ticket_border.classList.add('ticket_border')
-
           let ticket_left = document.createElement('div')
           ticket_left.classList.add('ticket_left')
-          ticket_left.innerText = options.issuer
-
+          ticket_left.innerText = this.issuer
           let ticket_center = document.createElement('div')
           ticket_center.classList.add('ticket_center')
-          ticket_center.innerText = options.bits + ' ' + options.unit
-          
+          ticket_center.innerText = this.bits + ' ' + this.unit
           let ticket_right = document.createElement('div')
           ticket_right.classList.add('ticket_right')
-          ticket_right.innerText = options.name
-
+          ticket_right.innerText = this.name
           ticket_border.append(ticket_left)
           ticket_border.append(ticket_center)
           ticket_border.append(ticket_right)
-
-          this.dom.append(ticket_border)
+          ticket.append(ticket_border)
+          return ticket
         }
       }
-	  // Get randomNumber from 1 to a certain integer, max:
-	  Math.randomFrom1 = (max) => Math.floor( Math.random() * (max) ) + 1
-		
-      // Function to get accumulated distribution of bits  
-      function sum(arr) {
-		  for(let i=0; i < arr.length; i++) {
-			  if(i != 0) {
-				  arr[i]['sum_bits'] = Number(arr[i-1]['sum_bits']) + Number(arr[i]['bits'])
-			  } else {
-				  arr[i]['sum_bits'] =  Number(arr[i]['bits'])
-			  }
-		  }
-		  return arr
-	  }
-		
-      //Function to randomly select winner based on # of tickets
-      function selectWinner(arr) {
-		  sum(arr)
-		  //index refers to the winning index
-		  let index = Math.randomFrom1(arr[arr.length-1]['sum_bits'])
-		  //Countdown
-		  for(let i = 3; i>0; i--) {
-			  alert(i)
-		  }
-		  //Iterate until first sight of winner
-		  for(let i = 0; i<arr.length; i++) {
-			  if(index <= arr[i]['sum_bits'])	{
-				  alert("Felicidades, " + arr[i]['name'] + "\nHas ganado la QuantaRifa!")
-				  return arr[i]['name']
-			  }
-		  }
-      }
 
-      async function getBits() {
-        return new Promise((resolve, reject)=>{
-          fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vT5X_u5aCrrDoamNNZcxdnsMh14xDFeQsvhJlmQMT9PeRw_j9ape4AFEP_85DTLh9KPjd9m7rnOTPcO/pub?output=csv').then(d=>d.text()).then(data=>{
-            let bits = csvJSON(data, 3).map(l=>({
-              name: l.Miembro,
-              bits: l.Total,
-              details: (({Miembro, Total, ...o})=>o)(l)
-            }))
-            console.log(bits)
-            bits.sort((a, b) => b.bits - a.bits)
-            resolve(bits.filter(i=>i.bits != 0))
-          })
-        })
-      }
+      class altBits{
+        constructor(options){
+          altBits.issuer = options.issuer;
+          altBits.unit = options.unit;
+          this.bits = []
+        }
+        // Get bits from URL, specify headers names
+        async getBits(url, options){
+          options.container.innerHTML = ""
+          let bits_raw = await fetch(url)
+          let bits_json = csvJSON( await bits_raw.text(), 3 )
+          let bits = bits_json
+            .map(l=>(
+              new Participant({
+                name: l[options.name],
+                bits: l[options.bits],
+                details: (({name, bits, ...o})=>o)(l)
+              })
+            ))
+            .sort((a, b) => b.bits - a.bits)
+            .filter(i=>i.bits != 0)
+          console.log(bits)
+          Participant.maxBits = bits[0].bits
+          options.container.append(...bits.map(l=>l.renderBall()))
+          options.randomButton.addEventListener('click', this.selectWinner.bind(this))
+          this.bits = bits;
+        }
 
-      getBits().then(bits=>{
-        Leader.maxBits = bits[0].bits
-        let allBits = []
-        for(let leader of bits){
-          for(let i = 0 ; i<leader.bits; i++){
-            allBits.push(leader.name)
+        renderWinnerModal(winner){
+          confetti.start(3000)
+
+          let container = document.createElement('div');
+          container.style.padding = '8px'
+          container.style.display = 'flex';
+          container.style.flexDirection = 'column';
+          container.style.alignContent = 'center'
+          container.style.alignItems = 'center'
+          container.style.justifyContent = 'center'
+          let title =  document.createElement('h1');
+          title.innerText = 'Felicidades';
+          let medal = document.createElement('div');
+          medal.setAttribute('name', 'medal')
+          let winner_cont = document.createElement('div');
+          winner_cont.setAttribute('name', 'winner');
+          winner_cont.innerHTML = winner
+          container.append(medal, title, winner_cont)
+          UIModal.show(container, 'Felicitaciones')
+        }
+
+        setAccumulatedBits(){
+          for(let i=0; i < this.bits.length; i++) {
+            if(i != 0) {
+              this.bits[i]['sum_bits'] = Number(this.bits[i-1]['sum_bits']) + Number(this.bits[i]['bits'])
+            } else {
+              this.bits[i]['sum_bits'] =  Number(this.bits[i]['bits'])
+            }
           }
-          document.querySelector('.leaderboard').append(new Leader(leader.name, leader.bits, leader.details).dom)
+          return this.bits
         }
-        document.querySelector("button").addEventListener('click', ()=>{
-          
-          selectWinner(allBits);
-        })
-      });
+        selectWinner(){
+          let winner;
+          Math.randomFrom1 = (max) => Math.floor( Math.random() * (max) ) + 1
+          this.setAccumulatedBits()
+          //index refers to the winning index
+          let index = Math.randomFrom1(this.bits[this.bits.length-1]['sum_bits'])
+          //Iterate until first sight of winner
+          for(let i = 0; i<this.bits.length; i++) {
+            if(index <= this.bits[i]['sum_bits'])	{
+              winner = this.bits[i]['name'];
+              break;
+            }
+          }
+          this.renderWinnerModal(winner)
+        }
+      }
+
+
+      new altBits({
+        issuer: 'Quanta',
+        unit: 'Tickets'
+      }).getBits('https://docs.google.com/spreadsheets/d/e/2PACX-1vT5X_u5aCrrDoamNNZcxdnsMh14xDFeQsvhJlmQMT9PeRw_j9ape4AFEP_85DTLh9KPjd9m7rnOTPcO/pub?output=csv', {
+        name: 'Miembro',
+        bits: 'Total',
+        container: document.querySelector('.leaderboard'),
+        randomButton: document.querySelector('button')
+      })
 
     </script>
   </body>
