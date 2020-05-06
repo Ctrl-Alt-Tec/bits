@@ -134,6 +134,11 @@
         }
 
       </style>
+      <!-- 
+      ENABLE CONSOLE FOR DEBUGGING  
+      <script src="https://cdn.jsdelivr.net/npm/vconsole"></script>
+      <script>new VConsole()</script> 
+      -->
   </head>
 
   <body>
@@ -174,11 +179,10 @@
 
       // Participant clas
       class Participant{
-        static maxBits;
         constructor(options){
           this.name = options.name;
           this.bits = options.bits;
-          this.details = options.details
+          this.details = options.details;
           this.issuer = altBits.issuer;
           this.unit = altBits.unit
         }
@@ -265,10 +269,9 @@
           options.randomButton.addEventListener('click', this.selectWinner.bind(this))
           this.bits = bits;
         }
-
+        // Modal window with winner name
         renderWinnerModal(winner){
           confetti.start(3000)
-
           let container = document.createElement('div');
           container.style.padding = '8px'
           container.style.display = 'flex';
@@ -286,7 +289,7 @@
           container.append(medal, title, winner_cont)
           UIModal.show(container, 'Felicitaciones')
         }
-
+        // Add accumulated bits (for randomnizer)
         setAccumulatedBits(){
           for(let i=0; i < this.bits.length; i++) {
             if(i != 0) {
@@ -297,6 +300,7 @@
           }
           return this.bits
         }
+        // Select Winner
         selectWinner(){
           let winner;
           Math.randomFrom1 = (max) => Math.floor( Math.random() * (max) ) + 1
@@ -315,6 +319,7 @@
       }
 
 
+      
       new altBits({
         issuer: 'Quanta',
         unit: 'Tickets'
@@ -324,7 +329,7 @@
         container: document.querySelector('.leaderboard'),
         randomButton: document.querySelector('button')
       })
-
+      
     </script>
   </body>
 </html>
