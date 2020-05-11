@@ -320,16 +320,19 @@
       }
 
 
-      
-      new altBits({
+      bitsHandler =  new altBits({
         issuer: 'Quanta',
         unit: 'Tickets'
-      }).getBits('https://docs.google.com/spreadsheets/d/e/2PACX-1vT5X_u5aCrrDoamNNZcxdnsMh14xDFeQsvhJlmQMT9PeRw_j9ape4AFEP_85DTLh9KPjd9m7rnOTPcO/pub?output=csv', {
-        name: 'Miembro',
-        bits: 'Total',
-        container: document.querySelector('.leaderboard'),
-        randomButton: document.querySelector('button')
       })
+      
+      bitsHandler.getBits('https://docs.google.com/spreadsheets/d/e/2PACX-1vT5X_u5aCrrDoamNNZcxdnsMh14xDFeQsvhJlmQMT9PeRw_j9ape4AFEP_85DTLh9KPjd9m7rnOTPcO/pub?output=csv',
+                          {
+                              name: 'Miembro',
+                              bits: 'Total',
+                              container: document.querySelector('.leaderboard'),
+                              randomButton: document.querySelector('button')
+                          }
+                         )
       
     </script>
   </body>
