@@ -266,6 +266,41 @@
           this.previousWinners = []
           this.place = 0
           this.medalSources = ["logos/MedallaBronceQuanta.png", "logos/MedallaPlataQuanta.png", "logos/MedallaOroQuanta.png"]
+          this.phrases = [["Toda la ciencia es o física o coleccionar estampillas","Ernest Rutherford"],
+                         ["La física está llena de los cadáveres de teorías unificadas de campos.", "Freeman Dyson"],
+                         ["Todo es física y matemáticas.", "Katherine Johnson"], 
+                         ["Una de las más grandes y más importantes herramientas del físico teórico es el cubo de basura.", "Richard Feynman"],
+                         ["Solo los físicos pueden pensar en la misma cosa una y otra vez.", "Richard Feynman"],
+                         ["La física se está volviendo demasiado difícil para los físicos.", "David Hilbert"], 
+                         ["Las matemáticas son el lenguaje en el que Dios ha escrito el Universo.", "Galileo Galilei"],
+                         ["Es incorrecto pensar que el objetivo de la física es descubrir cómo es la naturaleza. La física lidia con lo que decimos acerca de la naturaleza.", "Niels Bohr"],
+                         ["La física teórica es uno de los pocos campos en los que estar discapacitado no es una discapacidad. Todo está en la mente.", "Stephen Hawking"],
+                         ["Ahora mismo estoy ocupado nuevamente con el electromagnetismo, y creo que haber conseguido algo bueno.", "Michael Faraday"],
+                         ["Cuando se trata del mundo que nos rodea, ¿hay alguna otra opción más que explorarlo?", "Lisa Randall"],
+                         ["Ves a los estudiantes de física que no la entienden. Nadie en realidad la entiende.", "Richard Feynman"],
+                         ["La parte más importante de la física es saber hacer buenas aproximaciones.", "Lev Landáu"],
+                         ["Nosotros los matemáticos... todos estamos un poco locos.", "Lev Landáu"],
+                         ["Amo la física con todo mi corazón. Es como un tipo de amor personal, como el que alguien le tiene a una persona con quien está agradecida por muchas cosas.", "Lise Meitner"],
+                         ["Nada es demasiado maravilloso para ser verdad.", "Michael Faraday"],
+                         ["Dios es un matemático de muy alto nivel, quien ha usado matemáticas avanzadas para construir el universo.", "Paul Dirac"],
+                         ["En resumidas cuentas, el viaje en el tiempo es permitido por las leyes de la física", "Brian Greene"],
+                         ["El mejor logro que podemos esperar de hacer física, es simplemente no entender a un nivel más profundo", "Wolfgang Pauli"],
+                         ["Somos polvo de estrellas", "Carl Sagan"], 
+                         ["La realidad que plasmamos en palabras nunca será la realidad en sí", "Werner Heisenberg"],
+                         ["La creatividad es tan esencial para la física de partículas, la cosmología, las matemáticas y otros campos de la ciencia, como para sus beneficiarios más conocidos, las artes y las humanidades.": "Lisa Randall"],
+                         ["El gran colisionador de hadrones (CERN) es el Parque Jurásico de los físicos de partículas", "Philip Schewe"],
+                         ["En la física, no tienes que andar creándote problemas. La naturaleza lo hace por ti.", "Frank Wilczek"],
+                         ["Si los extraterrestres existen, ¿dónde están?", "Enrico Fermi"], 
+                         ["Todos los efectos de la naturaleza son consecuencias matemáticas de un puñado de leyes inmutables.", "Pierre Simon Laplace"],
+                         ["Cada acción tiene una reacción igual y opuesta.", "Isaac Newton"],
+                         ["Para llegar a la verdad más simple, se requieren años de contemplación.", "Isaac Newton"],
+                         ["La ignorancia completamente consciente es el preludio de cada avance real en la ciencia", "James Clerk Maxwell"],
+                         ["El trabajo de Einstein fue hacer a la física más filosófica", "Hendrik Antoon Lorentz"], 
+                         ["Si he visto más lejos es porque estoy sentado sobre los hombros de gigantes", "Isaac Newton"], 
+                         ["Ir a la Luna no es cuestión de física, sino de economía.", "John Rader Platt"],
+                         ["Si un problema está claramente planteado, ya no capta el interés de un físico.", "Peter Debye"], 
+                         ["Lo que generalmente consideramos como imposibles son simplemente problemas de ingeniería… no existen leyes de la física que lo prevengan.", "Michio Kaku"], 
+                         ["Dedicarse a la física es muy divertido si te gusta.", "Ashoke Sen"]]
         }
         // Get bits from URL, specify headers names
         async getBits(url, options){
@@ -320,6 +355,10 @@
           winner_cont.innerHTML = winner
           container.append(medal, title, winner_cont)
           UIModal.show(container, 'Felicitaciones')
+          
+          //Print random quote:
+          let chosenPhrase = this.phrases[Math.floor(Math.random() * this.phrases.length)];
+          alert(chosenPhrase[0] + '\n' + chosenPhrase[1] )
         }
         
         // Add accumulated bits (for randomnizer)
