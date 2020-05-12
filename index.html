@@ -370,8 +370,9 @@
           let chosenPhrase = this.phrases[Math.floor(Math.random() * this.phrases.length)];
           let quote_cont = document.createElement('div');
           quote_cont.setAttribute('name', 'quote');
-          quote_cont.innerHTML = chosenPhrase[0] + chosenPhrase[1]; 
+          quote_cont.innerHTML = chosenPhrase[0] + "\n<b>"chosenPhrase[1] + "</b>"; 
           
+          //Add to container:
           container.append(medal, title, winner_cont, quote_cont)
           UIModal.show(container, 'Felicitaciones')
         }
