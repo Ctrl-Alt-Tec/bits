@@ -132,7 +132,7 @@
           /* box-shadow: inset 3px 3px 3px rgba(255,255,255,.7), inset -2px -2px 3px;
           border-radius: 200px;
           background: gold;*/
-          height: 200px; width: 200px;
+          height: 400px; width: 400px;
         }
 
       </style>
@@ -245,10 +245,14 @@
       }
 
       class altBits{
+
         constructor(options){
           altBits.issuer = options.issuer;
           altBits.unit = options.unit;
           this.bits = []
+          this.previousWinners = []
+          this.place = 0
+          this.medalSources = ["logos/MedallaOroQuanta.png", "logos/MedallaPlataQuanta.png", "logos/MedallaBronceQuanta.png"]
         }
         // Get bits from URL, specify headers names
         async getBits(url, options){
@@ -274,6 +278,8 @@
         // Modal window with winner name
         renderWinnerModal(winner){
           confetti.start(3000)
+          
+          //Create container:
           let container = document.createElement('div');
           container.style.padding = '8px'
           container.style.display = 'flex';
@@ -282,19 +288,24 @@
           container.style.alignItems = 'center'
           container.style.justifyContent = 'center'
           let title =  document.createElement('h1');
-          title.innerText = 'Felicidades';
+          title.innerText = '¡Felicidades!';
+          
+          //Create div to contain medal and import image:
           let medalDiv = document.createElement('div');
           medalDiv.setAttribute('name', 'medal')
           let medal = document.createElement('img')
-          medal.src = "logos/MedallaOroQuanta.png"
+          medal.src = medalSources[this.place % 3]
           medal.setAttribute('name', 'medal')
           medalDiv.appendChild(medal) 
+          
+          //Create winner tag:
           let winner_cont = document.createElement('div');
           winner_cont.setAttribute('name', 'winner');
           winner_cont.innerHTML = winner
           container.append(medal, title, winner_cont)
           UIModal.show(container, 'Felicitaciones')
         }
+        
         // Add accumulated bits (for randomnizer)
         setAccumulatedBits(){
           for(let i=0; i < this.bits.length; i++) {
@@ -306,22 +317,41 @@
           }
           return this.bits
         }
+        
         // Select Winner
         selectWinner(){
           let winner = "";
           Math.randomFrom1 = (max) => Math.floor( Math.random() * (max) ) + 1
           this.setAccumulatedBits()
-          //index refers to the winning index
+          
+          //index refers to the winning index:
           let index = Math.randomFrom1(this.bits[this.bits.length-1]['sum_bits'])
-          //Iterate until first sight of winner
+          
+          //Iterate until first sight of winner:
           for(let i = 0; i<this.bits.length; i++) {
             if(index <= this.bits[i]['sum_bits'])	{
               winner = this.bits[i]['name'];
               break;
             }
           }
+          
+          //Check if winner was already sorted:
+          if (this.previousWinners.includes(winner)) {
+            this.selectWinner();
+            return;
+          }
+          
+          //Add to previousWinners:
+          this.previousWinners.push(winner);
+          
+          //Show winner:
           this.renderWinnerModal(winner)
-          //return winner;
+          
+          // Update logic to start again with gold, silver, bronze:
+          this.place++
+          if (this.previousWinners.length == 3) {
+            this.previousWinners = []
+          }
         }
       }
 
