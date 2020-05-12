@@ -355,7 +355,7 @@
           //Show winner:
           this.renderWinnerModal(winner)
           
-          // Update logic to start again with gold, silver, bronze:
+          // Update logic to start again with gold, silver, bronze, and update button:
           this.place++
           if (this.previousWinners.length == 3) {
             this.previousWinners = []
@@ -366,11 +366,13 @@
           switch (this.place % 3) {
             case 0:
               document.querySelector('button').textContent = 'Sorteo 3º lugar';
-          
-          case 1:
+              break;
+            case 1:
               document.querySelector('button').textContent = 'Sorteo 2º lugar';
-          case 2:
+              break;
+            case 2:
               document.querySelector('button').textContent = 'Sorteo 1º lugar';
+              break;
           }
         }
       }
