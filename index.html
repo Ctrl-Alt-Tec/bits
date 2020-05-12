@@ -140,7 +140,7 @@
           font-size: 1.5em;
         }
              
-        [name="quote"]{
+        /*[name="quote"]{
           padding: 20px;
           width: 400px;
           height: 400px;
@@ -150,7 +150,7 @@
           background: white;
           color: black;
           font-size: 1.5em;
-        }
+        }*/
 
         [name="medal"]{
           /* box-shadow: inset 3px 3px 3px rgba(255,255,255,.7), inset -2px -2px 3px;
@@ -371,8 +371,8 @@
           //Print random quote:
           let chosenPhrase = this.phrases[Math.floor(Math.random() * this.phrases.length)];
           let quote_cont = document.createElement('div');
-          quote_cont.setAttribute('name', 'quote');
-          quote_cont.innerHTML = chosenPhrase[0] + '\n<b>' + chosenPhrase[1] + '</b>'; 
+          //quote_cont.setAttribute('name', 'quote');
+          quote_cont.innerHTML = chosenPhrase[0] + chosenPhrase[1]; 
         }
         
         // Add accumulated bits (for randomnizer)
