@@ -140,8 +140,7 @@
           font-size: 1.5em;
         }
              
-        /*[name="quote"]{
-          padding: 20px;
+        [name="quote"]{
           width: 400px;
           height: 400px;
           text-align: center;
@@ -150,7 +149,7 @@
           background: white;
           color: black;
           font-size: 1.5em;
-        }*/
+        }
 
         [name="medal"]{
           /* box-shadow: inset 3px 3px 3px rgba(255,255,255,.7), inset -2px -2px 3px;
@@ -365,14 +364,16 @@
           let winner_cont = document.createElement('div');
           winner_cont.setAttribute('name', 'winner');
           winner_cont.innerHTML = winner
-          container.append(medal, title, winner_cont)
-          UIModal.show(container, 'Felicitaciones')
+          
           
           //Print random quote:
           let chosenPhrase = this.phrases[Math.floor(Math.random() * this.phrases.length)];
           let quote_cont = document.createElement('div');
-          //quote_cont.setAttribute('name', 'quote');
+          quote_cont.setAttribute('name', 'quote');
           quote_cont.innerHTML = chosenPhrase[0] + chosenPhrase[1]; 
+          
+          container.append(medal, title, winner_cont, quote_cont)
+          UIModal.show(container, 'Felicitaciones')
         }
         
         // Add accumulated bits (for randomnizer)
