@@ -123,6 +123,10 @@
           color: black;
           font-size: 1.2em;
         }
+             
+        #errorButton {
+          display: none;
+        }
 
         .altUI_ListViewItem {
           width: 100%;
@@ -366,19 +370,21 @@
           // Update logic to start again with gold, silver, bronze, and update button:
           this.place++
           
-          //Change button text:
+          //Change button text and visibility of error button:
           
           switch (this.place % 3) {
             case 0:
-              document.querySelector('button').textContent = 'Sorteo 3º lugar';
+              document.getElementById('raffleButton').textContent = 'Sorteo 3º lugar';
               break;
             case 1:
-              document.querySelector('button').textContent = 'Sorteo 2º lugar';
+              document.getElementById('raffleButton').textContent = 'Sorteo 2º lugar';
               break;
             case 2:
-              document.querySelector('button').textContent = 'Sorteo 1º lugar';
+              document.getElementById('raffleButton').textContent = 'Sorteo 1º lugar';
               break;
           }
+          
+          document.getElementById('errorButton').style.display = "block";
         }
         
         //Error handler function if student is not present
@@ -387,15 +393,16 @@
             this.place--
             switch (this.place % 3) {
             case 0:
-              document.querySelector('button').textContent = 'Sorteo 3º lugar';
+              document.getElementById('raffleButton').textContent = 'Sorteo 3º lugar';
               break;
             case 1:
-              document.querySelector('button').textContent = 'Sorteo 2º lugar';
+              document.getElementById('raffleButton').textContent = 'Sorteo 2º lugar';
               break;
             case 2:
-              document.querySelector('button').textContent = 'Sorteo 1º lugar';
+              document.getElementById('raffleButton').textContent = 'Sorteo 1º lugar';
               break;
             } 
+            document.getElementById('errorButton').style.display = "none";
           } else {
             alert("Aun no ha habido sorteos.")
           }
