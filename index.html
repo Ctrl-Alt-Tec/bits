@@ -294,7 +294,7 @@
           let medalDiv = document.createElement('div');
           medalDiv.setAttribute('name', 'medal')
           let medal = document.createElement('img')
-          medal.src = medalSources[this.place % 3]
+          medal.src = this.medalSources[this.place % 3]
           medal.setAttribute('name', 'medal')
           medalDiv.appendChild(medal) 
           
