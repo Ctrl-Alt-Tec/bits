@@ -152,7 +152,7 @@
   </head>
 
   <body>
-    <embed src="herBreath.mp3" loop="true" autostart="true" width="2" height="0">
+    <audio id="audio" src="coroHimnoTec.mp3"></audio>
     <div class="leaderboard">
     </div>
     <span style="display: flex; padding: 16px; flex-direction: column; align-items: center; color: white;">
@@ -286,7 +286,8 @@
         // Modal window with winner name
         renderWinnerModal(winner){
           confetti.start(3000)
-          
+          let audio = document.getElementById("audio");
+          audio.play();
           //Create container:
           let container = document.createElement('div');
           container.style.padding = '8px'
