@@ -129,10 +129,10 @@
         }
 
         [name="medal"]{
-          box-shadow: inset 3px 3px 3px rgba(255,255,255,.7), inset -2px -2px 3px;
-          height: 400px; width: 400px;
+          /* box-shadow: inset 3px 3px 3px rgba(255,255,255,.7), inset -2px -2px 3px;
           border-radius: 200px;
-          background: gold;
+          background: gold;*/
+          height: 400px; width: 400px;
         }
 
       </style>
@@ -283,8 +283,13 @@
           container.style.justifyContent = 'center'
           let title =  document.createElement('h1');
           title.innerText = 'Felicidades';
-          let medal = document.createElement('div');
-          medal.setAttribute('name', 'medal')
+          let medalDiv = document.createElement('div');
+          medalDiv.setAttribute('name', 'medal')
+          let medal = document.createElement('img')
+          medal.source = "logos/MedallaOroQuanta"
+          medal.style.width = medalDiv.style.width;
+          medal.style.height = medalDiv.style.height;
+          medalDiv.appendChild(medal) 
           let winner_cont = document.createElement('div');
           winner_cont.setAttribute('name', 'winner');
           winner_cont.innerHTML = winner
