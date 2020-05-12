@@ -157,8 +157,9 @@
     </div>
     <span style="display: flex; padding: 16px; flex-direction: column; align-items: center; color: white;">
 
-      <button>Sorteo 3º lugar</button>
-
+      <button id="raffleButton">Sorteo 3º lugar</button>
+      <button id="errorButton">No estuvo presente</button>
+      
       Made with ❤️ by <a href="http://ctrl-alt-tec.hackclub.com">Ctrl Alt Tec</a>
     </span>
 
@@ -281,8 +282,10 @@
           Participant.maxBits = bits[0].bits
           options.container.append(...bits.map(l=>l.renderBall()))
           options.randomButton.addEventListener('click', this.selectWinner.bind(this))
+          options.errorButton.addEventListener('click', this.notPresent.bind(this))
           this.bits = bits;
         }
+        
         // Modal window with winner name
         renderWinnerModal(winner){
           confetti.start(3000)
@@ -329,6 +332,10 @@
         
         // Select Winner
         selectWinner(){
+          if (this.place % 3 == 0) {
+            this.previousWinners = []
+          }
+          
           let winner = "";
           Math.randomFrom1 = (max) => Math.floor( Math.random() * (max) ) + 1
           this.setAccumulatedBits()
@@ -358,9 +365,6 @@
           
           // Update logic to start again with gold, silver, bronze, and update button:
           this.place++
-          if (this.previousWinners.length == 3) {
-            this.previousWinners = []
-          }
           
           //Change button text:
           
@@ -376,6 +380,26 @@
               break;
           }
         }
+        
+        //Error handler function if student is not present
+        notPresent() {
+          if(this.place>0) {
+            this.place--
+            switch (this.place % 3) {
+            case 0:
+              document.querySelector('button').textContent = 'Sorteo 3º lugar';
+              break;
+            case 1:
+              document.querySelector('button').textContent = 'Sorteo 2º lugar';
+              break;
+            case 2:
+              document.querySelector('button').textContent = 'Sorteo 1º lugar';
+              break;
+            } 
+          } else {
+            alert("Aun no ha habido sorteos.")
+          }
+        }
       }
 
 
@@ -389,7 +413,8 @@
                               name: 'Miembro',
                               bits: 'Total',
                               container: document.querySelector('.leaderboard'),
-                              randomButton: document.querySelector('button')
+                              randomButton: document.getElementById('raffleButton'), 
+                              errorButton: document.getElementById('errorButton')
                           }
                          )
       
