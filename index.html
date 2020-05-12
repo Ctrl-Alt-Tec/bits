@@ -115,6 +115,14 @@
           font-weight: 800;
           
         }
+        
+        button {
+          padding: 16px;
+          margin: 16px;
+          background: white;
+          color: black;
+          font-size: 1.5em;
+        }
 
         .altUI_ListViewItem {
           width: 100%;
@@ -252,7 +260,7 @@
           this.bits = []
           this.previousWinners = []
           this.place = 0
-          this.medalSources = ["logos/MedallaOroQuanta.png", "logos/MedallaPlataQuanta.png", "logos/MedallaBronceQuanta.png"]
+          this.medalSources = ["logos/MedallaBronceQuanta.png", "logos/MedallaPlataQuanta.png", "logos/MedallaOroQuanta.png"]
         }
         // Get bits from URL, specify headers names
         async getBits(url, options){
@@ -352,6 +360,17 @@
           if (this.previousWinners.length == 3) {
             this.previousWinners = []
           }
+          
+          //Change button text:
+          
+          switch (this.place % 3) {
+            case 0:
+              document.querySelector('button').textContent = 'Sorteo 3º lugar';
+          }
+          case 1:
+              document.querySelector('button').textContent = 'Sorteo 2º lugar';
+          case 2:
+              document.querySelector('button').textContent = 'Sorteo 1º lugar'
         }
       }
 
