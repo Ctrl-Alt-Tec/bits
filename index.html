@@ -142,10 +142,7 @@
              
         [name="quote"]{
           width: 600px;
-          height: 100px;
-          text-align: center;
-          vertical-align: middle;
-          line-height: 100px;
+          height: 200px;
           background: white;
           color: black;
           font-size: 1.5em;
@@ -370,7 +367,23 @@
           let chosenPhrase = this.phrases[Math.floor(Math.random() * this.phrases.length)];
           let quote_cont = document.createElement('div');
           quote_cont.setAttribute('name', 'quote');
-          quote_cont.innerHTML = chosenPhrase[0] + "\n<b>" + chosenPhrase[1] + "</b>"; 
+          
+          let phrase_cont = document.createElement('div');
+          phrase_cont.style.height = '150px';
+          phrase_cont.style.padding = '0px';
+          phrase_cont.style.margin = '0px';
+          phrase_cont.style.textAlign = 'left';
+          quote_cont.innerHTML = chosenPhrase[0]
+          
+          let author_cont = document.createElement('div');
+          author_cont.style.height = '50px';
+          author_cont.style.padding = '0px';
+          author_cont.style.margin = '0px';
+          author_cont.style.textAlign = 'right';
+          author_cont.innerHTML = "<b>" + chosenPhrase[1] + "</b>";
+          
+          quote_cont.appendChild(phrase_cont);
+          quote_cont.appendChild(author_cont);
           
           //Add to container:
           container.append(medal, title, winner_cont, quote_cont)
