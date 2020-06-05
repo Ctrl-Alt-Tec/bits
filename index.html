@@ -273,7 +273,7 @@
           altBits.issuer = options.issuer;
           altBits.unit = options.unit;
           this.bits = []
-          var this.previousWinners = []
+          this.previousWinners = []
           this.absent = []
           this.place = 0
           this.medalSources = ["logos/AtomoQuanta.png", "logos/AtomoQuanta.png", "logos/AtomoQuanta.png", "logos/MedallaBronceQuanta.png", "logos/MedallaPlataQuanta.png", "logos/MedallaOroQuanta.png"]
@@ -417,8 +417,8 @@
             document.getElementById('errorButton').style.display = "none";
             //Sort PreviousWinners in Ascending order according to bits
             this.previousWinners.sort(function sortear(x,y) {
-                                      if(x.bits > y.bits){return -1}
-                                      else if(y.bits > x.bits){return 1}
+                                      if(x.bits > y.bits){return 1}
+                                      else if(y.bits > x.bits){return -1}
                                       else{return 0}
                                       });
             
