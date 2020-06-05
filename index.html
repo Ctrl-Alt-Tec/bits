@@ -412,8 +412,12 @@
           
           if (this.place % 6 == 0) {
             this.previousWinners = []
+          } else if (this.place % 6 == 1) {
+            //Show "Not present" button
+            document.getElementById('errorButton').style.display = "block";
           } else if(this.place%6 == 3){
-            
+            //Hide "Not present" button
+            document.getElementById('errorButton').style.display = "none";
             //Sort PreviousWinners in Ascending order according to bits
             this.previousWinners.sort(function compare(a, b) {
                                         if (a['bits']<b['bits']) {
