@@ -408,9 +408,12 @@
         
         // Select Winner
         selectWinner(){
+          
+          
           if (this.place % 6 == 0) {
             this.previousWinners = []
-          }else if(this.place%6 == 3){
+          } else if(this.place%6 == 3){
+            
             //Sort PreviousWinners in Ascending order according to bits
             this.previousWinners.sort(function compare(a, b) {
                                         if (a['bits']<b['bits']) {
@@ -443,13 +446,13 @@
             }
 
             //Check if winner was already sorted:
-            if (this.previousWinners.includes(winner['name']) || this.absent.includes(winner['name'])) {
+            if (this.previousWinners.includes(winner) || this.absent.includes(winner)) {
               this.selectWinner();
               return;
             }
 
             //Add to previousWinners:
-            this.previousWinners.push(winner['name']);
+            this.previousWinners.push(winner);
             //Show Winner
             this.renderWinnerModal(winner['name'])
           }
@@ -468,6 +471,7 @@
             case 1:
             case 2:
               document.getElementById('raffleButton').textContent = 'Sorteo';
+              break;
             case 3:
               document.getElementById('raffleButton').textContent = 'Mostrar 3º lugar';
               break;
@@ -492,6 +496,7 @@
               case 1:
               case 2:
                 document.getElementById('raffleButton').textContent = 'Sorteo';
+                break;
               case 3:
                 document.getElementById('raffleButton').textContent = 'Mostrar 3º lugar';
                 break;
