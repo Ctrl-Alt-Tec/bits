@@ -412,9 +412,6 @@
           
           if (this.place % 6 == 0) {
             this.previousWinners = []
-          } else if (this.place % 6 == 1) {
-            //Show "Not present" button
-            document.getElementById('errorButton').style.display = "block";
           } else if(this.place%6 == 3){
             //Hide "Not present" button
             document.getElementById('errorButton').style.display = "none";
@@ -472,11 +469,17 @@
           
           switch (this.place % 6) {
             case 0:
+              document.getElementById('raffleButton').textContent = 'Sorteo';
+              break;
             case 1:
             case 2:
+              //Show "Not present" button
+              document.getElementById('errorButton').style.display = "block";
               document.getElementById('raffleButton').textContent = 'Sorteo';
               break;
             case 3:
+              //Show "Not present" button
+              document.getElementById('errorButton').style.display = "block";
               document.getElementById('raffleButton').textContent = 'Mostrar 3º lugar';
               break;
             case 4:
