@@ -219,10 +219,10 @@
           let bitsCont = document.createElement('div');
           bitsCont.classList.add('bits_cont')
           bitsCont.innerText = this.bits;
-          bitsCont.style.width = this.bits/Participant.maxBits*70+'vh'
-          bitsCont.style.height = this.bits/Participant.maxBits*70+'vh'
-          bitsCont.style.lineHeight = this.bits/Participant.maxBits*70+'vh'
-          bitsCont.style.fontSize = this.bits/Participant.maxBits*35+'vh'
+          bitsCont.style.width = ((this.bits/Participant.maxBits)**0.5)*70+'vh'
+          bitsCont.style.height = ((this.bits/Participant.maxBits)**0.5)*70+'vh'
+          bitsCont.style.lineHeight = ((this.bits/Participant.maxBits)**0.5)*70+'vh'
+          bitsCont.style.fontSize = ((this.bits/Participant.maxBits)**0.5)*35+'vh'
           this.dom.append(bitsCont, this.name)
           this.dom.addEventListener('click', this.renderDetails.bind(this)) 
           return this.dom
